@@ -1,0 +1,15 @@
+services:
+  app:
+    # No construimos la imagen, usamos una con las herramientas de desarrollo
+    image: maven:3.9-eclipse-temurin-21
+
+    # Ejecutamos con el plugin de Maven para activar la recarga en caliente
+    command: mvn spring-boot:run
+
+    # Mapeamos el código y la caché de Maven para desarrollo en tiempo real
+    volumes:
+      - ./src:/app/src
+      - ./pom.xml:/app/pom.xml
+      - ~/.m2:/root/.m2
+
+    working_dir: /app
