@@ -1,0 +1,29 @@
+{
+  "name": "Spring Boot App - Dev Environment",
+  "dockerComposeFile": [
+    "../docker-compose.yml"
+  ],
+  "service": "app",
+  // This have to match withe the WORDIR in container (Tha dirrectory 
+  // was set in the Dockerfile and docker-compose.override.yml)
+  "workspaceFolder": "/app", 
+
+  // Allow that the container stops when you close de VS Code window or the tool window.
+  "shutdownAction": "stopCompose",
+  
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "vscjava.vscode-java-pack",
+        //"vmware.vscode-spring-boot",
+        "humao.rest-client",
+        "Mtebene.sqltools-driver-mysql"
+      ],
+      // TODO:
+      "settings": {
+        "workbench.colorTheme": "Red"
+      }
+    }
+  },
+  "postStartCommand": "mvn --version && java -version $$ mvn spring-boot:run"
+}

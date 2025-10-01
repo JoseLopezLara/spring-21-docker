@@ -1,34 +1,3 @@
-¡Por supuesto! Aquí tienes la solución completa, consolidada y ordenada en un solo lugar, combinando las mejores prácticas para producción y un flujo de trabajo eficiente para desarrollo.
-
-Archivos de Configuración para tu Proyecto
-Coloca los siguientes archivos en la raíz de tu proyecto Spring Boot, junto a tu archivo pom.xml.
-
-1. Dockerfile (Para la imagen final de producción)
-Este archivo crea una imagen optimizada, ligera y segura de tu aplicación.
-
-Dockerfile
-
-# =========================================================================
-# ETAPA 1: Construcción (Build Stage) - Usa Maven y JDK 21
-# =========================================================================
-FROM maven:3.9-eclipse-temurin-21 AS builder
-WORKDIR /app
-COPY pom.xml .
-RUN mvn dependency:go-offline
-COPY src ./src
-RUN mvn clean package -DskipTests
-
-# =========================================================================
-# ETAPA 2: Ejecución (Run Stage) - Usa solo el JRE para ser más ligera
-# =========================================================================
-FROM eclipse-temurin:21-jre-jammy
-WORKDIR /app
-EXPOSE 8080
-COPY --from=builder /app/target/*.jar app.jar
-ENTRYPOINT ["java", "-jar", "app.jar"]
-2. .dockerignore
-Este archivo acelera la construcción de la imagen al ignorar archivos innecesarios.
-
 # Git
 .git
 .gitignore

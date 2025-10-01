@@ -17,10 +17,12 @@ services:
       - spring-net
 
   app:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
     container_name: spring_boot_app
     ports:
-      - "8069:8080"
+      - "8080:8080"
     environment:
       SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/mi_app_db?useSSL=false&allowPublicKeyRetrieval=true
       SPRING_DATASOURCE_USERNAME: user
@@ -30,13 +32,6 @@ services:
       - db
     networks:
       - spring-net
-
-    volumes:
-      - .vscode:/app/.vscode
-      - .devcontainer:/app/.devcontainer
-    # command: ["mvn", "--version"]
-    # tty: true
-    command: sleep infinity
 
 volumes:
   db_data:
